@@ -1,4 +1,5 @@
 #include "raylib.h"
+#include <stdio.h>
 
 //global stuff
 #define MAX_BULLETS 100
@@ -39,13 +40,13 @@ int main(void)
     starship.color = GREEN;
 
     for (int i = 0; i < MAX_BULLETS; i++) {
-    bullet[i].pos.x = starship.pos.x;
-    bullet[i].pos.y = starship.pos.y;
-    bullet[i].size.x = starship.pos.x / 4;
-    bullet[i].size.y = starship.pos.y / 4;
-    bullet[i].color = YELLOW;
-    bullet[i].speed = 5;
-    bullet[i].isActive = false;
+	bullet[i].pos.x = starship.pos.x;
+	bullet[i].pos.y = starship.pos.y;
+	bullet[i].size.x = starship.pos.x / 4;
+	bullet[i].size.y = starship.pos.y / 4;
+	bullet[i].color = YELLOW;
+	bullet[i].speed = 5;
+	bullet[i].isActive = false;
     }
 
     Bullet *bulletp = &bullet[MAX_BULLETS - 1];
@@ -69,10 +70,12 @@ int main(void)
 	if(IsKeyDown(KEY_SPACE)) {
 		bulletp[maxbulletacum].isActive = true;
 		maxbulletacum++;
-		if(IsKeyReleased(KEY_SPACE)) { 
-			maxbulletacum++;
-			}
-	};
+	}
+	
+	if(IsKeyReleased(KEY_SPACE)) { 
+		maxbulletacum++;
+		printf("%d", maxbulletacum);
+	}
 
         // Draw
         //----------------------------------------------------------------------------------
@@ -82,11 +85,10 @@ int main(void)
 	    
 	    DrawRectangleV(starship.pos, starship.size, starship.color);
 
-	    if(bulletp->isActive == true) {
-		for (int i = 0; i < MAX_BULLETS; i++) {
-		    DrawRectangleV(bulletp[maxbulletacum].pos, bulletp->size, bullet->color);
-		    bulletp[i].pos.y -= bulletp[i].speed;
-		}
+	for (int i = 0; i < maxbulletacum; i++) {
+	    if(bulletp->isActive) continue;
+		    DrawRectangleV(bulletp[i].pos, bullet[i].size, bullet[i].color);
+		    bullet[i].pos.y -= bullet[i].speed;
 	    }
 
             DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
