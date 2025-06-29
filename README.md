@@ -1,6 +1,6 @@
-* Bullet Salvation
+# Bullet Salvation
 
-** goals
+### goals
 - simple collisions
 - a boost mechanic
 - multiple lives
