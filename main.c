@@ -49,8 +49,6 @@ int main(void)
 	bullet[i].isActive = false;
     }
 
-    Bullet *bulletp = &bullet[MAX_BULLETS - 1];
-
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
 
@@ -68,32 +66,26 @@ int main(void)
 
 	int maxbulletacum = 0;
 	if(IsKeyDown(KEY_SPACE)) {
-		bulletp[maxbulletacum].isActive = true;
+		bullet[maxbulletacum].isActive = true;
 		maxbulletacum++;
-	}
-	
-	if(IsKeyReleased(KEY_SPACE)) { 
-		maxbulletacum++;
-		printf("%d", maxbulletacum);
+		printf("FIRE!!!");
 	}
 
         // Draw
         //----------------------------------------------------------------------------------
-        BeginDrawing();
+	BeginDrawing();
 
-            ClearBackground((Color){21, 29, 33, 255});
-	    
-	    DrawRectangleV(starship.pos, starship.size, starship.color);
+	ClearBackground((Color){21, 29, 33, 255});
 
-	for (int i = 0; i < maxbulletacum; i++) {
-	    if(bulletp->isActive) continue;
-		    DrawRectangleV(bulletp[i].pos, bullet[i].size, bullet[i].color);
-		    bullet[i].pos.y -= bullet[i].speed;
-	    }
+	DrawRectangleV(starship.pos, starship.size, starship.color);
 
-            DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
+	for (int i = 0; i < MAX_BULLETS; i++) {
+		if(bullet[i].isActive) continue;
+			DrawRectangleV(bullet[i].pos, bullet[i].size, bullet[i].color);
+			bullet[i].pos.y -= bullet[i].speed;
+	}
 
-        EndDrawing();
-        //----------------------------------------------------------------------------------
+	EndDrawing();
+//----------------------------------------------------------------------------------
     }
 }
